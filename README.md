@@ -25,7 +25,7 @@ We choose two types of CNNs as the backbone candidates: ResNet and HRNet. The de
 | TransPose-H-A6 | HRNet-S-W48 |         6         |  96  | 192  |   1    | 17.5Mb  |         78.1          | [model](https://github.com/yangsenius/TransPose/releases/download/Hub/tp_h_48_256x192_enc6_d96_h192_mh1.pth) |
 
 ### Quick use
-Try out the Web Demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/satpalsr/TransPose)   
+Try out the Web Demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/satpalsr/TransPose)
 
 You can directly load TransPose-R-A4 or TransPose-H-A4 models with pretrained weights on COCO train2017 dataset from Torch Hub, simply by:
 
@@ -118,7 +118,7 @@ Given an input image, a pretrained TransPose model, and the predicted locations,
             |   |-- tp_r_256x192_enc4_d256_h1024_mh8.pth
             |   |-- tp_h_32_256x192_enc4_d64_h128_mh1.pth
             |   |-- tp_h_48_256x192_enc4_d96_h192_mh1.pth
-            |   |-- tp_h_48_256x192_enc6_d96_h192_mh1.pth    
+            |   |-- tp_h_48_256x192_enc6_d96_h192_mh1.pth
    ```
 
 ### Data Preparation
@@ -136,11 +136,31 @@ ${POSE_ROOT}/data/coco/
 `-- images
 	|-- train2017
 	|   |-- 000000000009.jpg
-	|   |-- ... 
+	|   |-- ...
 	`-- val2017
 		|-- 000000000139.jpg
-		|-- ... 
+		|-- ...
 ```
+
+#### Converting
+To convert a single dataset with the format bellow to the one above, you can use the following commands:
+```txt
+${POSE_ROOT}/data/my_coco_dataset/
+|-- instances.json
+`-- images
+	|-- 000000000009.jpg
+    |-- ...
+```
+
+```bash
+mkdir -p data/coco/annotations
+mkdir -p data/coco/images
+cp data/my_coco_dataset/instances.json data/coco/annotations/person_keypoints_train2017.json
+cp data/my_coco_dataset/instances.json data/coco/annotations/person_keypoints_val2017.json
+cp -r data/my_coco_dataset/images data/coco/images/train2017
+cp -r data/my_coco_dataset/images data/coco/images/val2017
+```
+
 
 ### Traing & Testing
 
