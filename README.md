@@ -153,12 +153,13 @@ ${POSE_ROOT}/data/my_coco_dataset/
 ```
 
 ```bash
+dataset_folder=data/my_coco_dataset/
 mkdir -p data/coco/annotations
 mkdir -p data/coco/images
-cp data/my_coco_dataset/instances.json data/coco/annotations/person_keypoints_train2017.json
-cp data/my_coco_dataset/instances.json data/coco/annotations/person_keypoints_val2017.json
-cp -r data/my_coco_dataset/images data/coco/images/train2017
-cp -r data/my_coco_dataset/images data/coco/images/val2017
+cp $dataset_folder/instances.json data/coco/annotations/person_keypoints_train2017.json
+cp $dataset_folder/instances.json data/coco/annotations/person_keypoints_val2017.json
+cp -r $dataset_folder/images data/coco/images/train2017
+cp -r $dataset_folder/images data/coco/images/val2017
 ```
 
 
