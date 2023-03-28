@@ -68,7 +68,7 @@ def main():
 
     # Data loading code
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    val_dataset = eval(f"dataset.cfg.DATASET.DATASET")(
+    val_dataset = eval(f"dataset.{cfg.DATASET.DATASET}")(
         cfg, cfg.DATASET.ROOT, cfg.DATASET.TEST_SET, False,
         transforms.Compose([transforms.ToTensor(), normalize])
     )
@@ -91,8 +91,6 @@ def main():
             else:
                 output = outputs
 
-            print(output)
-
             if cfg.TEST.FLIP_TEST:
                 input_flipped = np.flip(input_img.cpu().numpy(), 3).copy()
                 input_flipped = torch.from_numpy(input_flipped).cuda()
@@ -108,8 +106,7 @@ def main():
 
                 output = (output + output_flipped) * 0.5
 
-            print(output)
-
+            return
 
 if __name__ == "__main__":
     main()
