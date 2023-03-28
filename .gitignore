@@ -1,6 +1,9 @@
 data/
+<<<<<<< Updated upstream
 log/
 output/
+=======
+>>>>>>> Stashed changes
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -153,28 +153,29 @@ ${POSE_ROOT}/data/my_coco_dataset/
 ```
 
 ```bash
-dataset_folder=data/my_coco_dataset/
+dataset_folder=data/2023_03_27_100_samples_cable_15_points_coco/
 mkdir -p data/coco/annotations
 mkdir -p data/coco/images
-cp $dataset_folder/instances.json data/coco/annotations/person_keypoints_train2017.json
-cp $dataset_folder/instances.json data/coco/annotations/person_keypoints_val2017.json
+cp $dataset_folder/annotations.json data/coco/annotations/person_keypoints_train2017.json
+cp $dataset_folder/annotations.json data/coco/annotations/person_keypoints_val2017.json
 cp -r $dataset_folder/images data/coco/images/train2017
 cp -r $dataset_folder/images data/coco/images/val2017
 ```
 
-
 ### Traing & Testing
-
-#### Testing on COCO val2017 dataset
-
-```bash
-python tools/test.py --cfg experiments/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8.yaml TEST.USE_GT_BBOX True
-```
 
 #### Training on COCO train2017 dataset
 
 ```bash
 python tools/train.py --cfg experiments/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8.yaml
+```
+
+#### Testing on COCO val2017 dataset
+
+```bash
+mkdir -p models/pytorch/transpose_coco/
+cp output/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8/model_best.pth models/pytorch/transpose_coco/tp_r_256x192_enc4_d256_h1024_mh8.pth
+python tools/test.py --cfg experiments/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8.yaml TEST.USE_GT_BBOX True
 ```
 
 ### Acknowledgements
