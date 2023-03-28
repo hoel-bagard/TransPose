@@ -70,8 +70,7 @@ def main():
     args = parse_args()
     update_config(cfg, args)
 
-    logger, final_output_dir, tb_log_dir = create_logger(
-        cfg, args.cfg, 'valid')
+    logger, final_output_dir, tb_log_dir = create_logger(cfg, args.cfg, 'valid')
 
     logger.info(pprint.pformat(args))
     logger.info(cfg)
@@ -81,9 +80,7 @@ def main():
     torch.backends.cudnn.deterministic = cfg.CUDNN.DETERMINISTIC
     torch.backends.cudnn.enabled = cfg.CUDNN.ENABLED
 
-    model = eval('models.'+cfg.MODEL.NAME+'.get_pose_net')(
-        cfg, is_train=False
-    )
+    model = eval('models.'+cfg.MODEL.NAME+'.get_pose_net')(cfg, is_train=False)
 
     if cfg.TEST.MODEL_FILE:
         logger.info('=> loading model from {}'.format(cfg.TEST.MODEL_FILE))
@@ -92,9 +89,7 @@ def main():
         # ckpt_state_dict.pop('pos_embedding') # FOR UNSeen Resolutions
         model.load_state_dict(ckpt_state_dict, strict=True)   #  strict=False FOR UNSeen Resolutions
     else:
-        model_state_file = os.path.join(
-            final_output_dir, 'final_state.pth'
-        )
+        model_state_file = os.path.join(final_output_dir, 'final_state.pth')
         logger.info('=> loading model from {}'.format(model_state_file))
         model.load_state_dict(torch.load(model_state_file))
     w, h = cfg.MODEL.IMAGE_SIZE
@@ -115,20 +110,13 @@ def main():
     model = torch.nn.DataParallel(model, device_ids=cfg.GPUS).cuda()
 
     # define loss function (criterion) and optimizer
-    criterion = JointsMSELoss(
-        use_target_weight=cfg.LOSS.USE_TARGET_WEIGHT
-    ).cuda()
+    criterion = JointsMSELoss(use_target_weight=cfg.LOSS.USE_TARGET_WEIGHT).cuda()
 
     # Data loading code
-    normalize = transforms.Normalize(
-        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-    )
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     valid_dataset = eval('dataset.'+cfg.DATASET.DATASET)(
         cfg, cfg.DATASET.ROOT, cfg.DATASET.TEST_SET, False,
-        transforms.Compose([
-            transforms.ToTensor(),
-            normalize,
-        ])
+        transforms.Compose([ransforms.ToTensor(), normalize])
     )
     valid_loader = torch.utils.data.DataLoader(
         valid_dataset,
