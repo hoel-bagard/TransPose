@@ -95,8 +95,7 @@ def train(config, train_loader, model, criterion, optimizer, epoch,
             #                   prefix)
 
 
-def validate(config, val_loader, val_dataset, model, criterion, output_dir,
-             tb_log_dir, writer_dict=None):
+def validate(config, val_loader, val_dataset, model, criterion, output_dir, tb_log_dir, writer_dict=None):
     batch_time = AverageMeter()
     losses = AverageMeter()
     acc = AverageMeter()
@@ -150,8 +149,7 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
             num_images = input.size(0)
             # measure accuracy and record loss
             losses.update(loss.item(), num_images)
-            _, avg_acc, cnt, pred = accuracy(output.cpu().numpy(),
-                                             target.cpu().numpy())
+            _, avg_acc, cnt, pred = accuracy(output.cpu().numpy(), target.cpu().numpy())
 
             acc.update(avg_acc, cnt)
 
@@ -163,8 +161,7 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
             s = meta['scale'].numpy()
             score = meta['score'].numpy()
 
-            preds, maxvals = get_final_preds(
-                config, output.clone().cpu().numpy(), c, s)
+            preds, maxvals = get_final_preds(config, output.clone().cpu().numpy(), c, s)
 
             all_preds[idx:idx + num_images, :, 0:2] = preds[:, :, 0:2]
             all_preds[idx:idx + num_images, :, 2:3] = maxvals
@@ -186,11 +183,8 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir,
                           loss=losses, acc=acc)
                 logger.info(msg)
 
-                prefix = '{}_{}'.format(
-                    os.path.join(output_dir, 'val'), i
-                )
-                save_debug_images(config, input, meta, target, pred*4, output,
-                                  prefix)
+                prefix = '{}_{}'.format(os.path.join(output_dir, 'val'), i)
+                save_debug_images(config, input, meta, target, pred*4, output, prefix)
 
         name_values, perf_indicator = val_dataset.evaluate(
             config, all_preds, output_dir, all_boxes, image_path,

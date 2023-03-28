@@ -139,8 +139,7 @@ def main():
     )
 
     # evaluate on validation set
-    validate(cfg, valid_loader, valid_dataset, model, criterion,
-             final_output_dir, tb_log_dir)
+    validate(cfg, valid_loader, valid_dataset, model, criterion, final_output_dir, tb_log_dir)
 
 
 if __name__ == '__main__':
