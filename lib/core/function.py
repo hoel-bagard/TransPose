@@ -184,7 +184,7 @@ def validate(config, val_loader, val_dataset, model, criterion, output_dir, tb_l
                 logger.info(msg)
 
                 prefix = '{}_{}'.format(os.path.join(output_dir, 'val'), i)
-            save_debug_images(config, input, meta, target, pred*4, output, prefix)
+                save_debug_images(config, input, meta, target, pred*4, output, prefix)
 
         name_values, perf_indicator = val_dataset.evaluate(
             config, all_preds, output_dir, all_boxes, image_path,

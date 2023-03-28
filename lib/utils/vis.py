@@ -19,8 +19,7 @@ import cv2
 from core.inference import get_max_preds
 
 
-def save_batch_image_with_joints(batch_image, batch_joints, batch_joints_vis,
-                                 file_name, nrow=8, padding=2):
+def save_batch_image_with_joints(batch_image, batch_joints, batch_joints_vis, file_name, nrow=8, padding=2):
     '''
     batch_image: [batch_size, channel, height, width]
     batch_joints: [batch_size, num_joints, 3],
@@ -54,8 +53,7 @@ def save_batch_image_with_joints(batch_image, batch_joints, batch_joints_vis,
     cv2.imwrite(file_name, ndarr)
 
 
-def save_batch_heatmaps(batch_image, batch_heatmaps, file_name,
-                        normalize=True):
+def save_batch_heatmaps(batch_image, batch_heatmaps, file_name, normalize=True):
     '''
     batch_image: [batch_size, channel, height, width]
     batch_heatmaps: ['batch_size, num_joints, height, width]
@@ -124,23 +122,13 @@ def save_debug_images(config, input, meta, target, joints_pred, output, prefix):
         return
 
     if config.DEBUG.SAVE_BATCH_IMAGES_GT:
-        save_batch_image_with_joints(
-            input, meta['joints'], meta['joints_vis'],
-            '{}_gt.jpg'.format(prefix)
-        )
+        save_batch_image_with_joints(input, meta['joints'], meta['joints_vis'], '{}_gt.jpg'.format(prefix))
     if config.DEBUG.SAVE_BATCH_IMAGES_PRED:
-        save_batch_image_with_joints(
-            input, joints_pred, meta['joints_vis'],
-            '{}_pred.jpg'.format(prefix)
-        )
+        save_batch_image_with_joints(input, joints_pred, meta['joints_vis'], '{}_pred.jpg'.format(prefix))
     if config.DEBUG.SAVE_HEATMAPS_GT:
-        save_batch_heatmaps(
-            input, target, '{}_hm_gt.jpg'.format(prefix)
-        )
+        save_batch_heatmaps(input, target, '{}_hm_gt.jpg'.format(prefix))
     if config.DEBUG.SAVE_HEATMAPS_PRED:
-        save_batch_heatmaps(
-            input, output, '{}_hm_pred.jpg'.format(prefix)
-        )
+        save_batch_heatmaps(input, output, '{}_hm_pred.jpg'.format(prefix))
 
 
 # coco_keypoints_id['nose'] = 0
