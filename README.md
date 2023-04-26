@@ -175,7 +175,13 @@ python tools/train.py --cfg experiments/coco/transpose_r/TP_R_256x192_d256_h1024
 ```bash
 mkdir -p models/pytorch/transpose_coco/
 cp output/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8/model_best.pth models/pytorch/transpose_coco/tp_r_256x192_enc4_d256_h1024_mh8.pth
-python tools/test.py --cfg experiments/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8.yaml TEST.USE_GT_BBOX True
+python tools/test.py --cfg experiments/coco/transpose_r/TP_R_256x192_d256_h1024_enc4_mh8.yaml TEST.USE_GT_BBOX True \
+    DEBUG.DEBUG True \
+    DEBUG.SAVE_BATCH_IMAGES_GT True \
+    DEBUG.SAVE_BATCH_IMAGES_PRED True \
+    DEBUG.SAVE_HEATMAPS_GT True \
+    DEBUG.SAVE_HEATMAPS_PRED True \
+    PRINT_FREQ 1
 ```
 
 ### Acknowledgements
