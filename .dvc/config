@@ -1,0 +1,6 @@
+[core]
+    remote = nas
+['remote "solov2"']
+    url = ssh://nas@192.168.2.221/mnt/nas/dvc/solov2
+['remote "nas"']
+    url = ssh://nas@192.168.2.221/mnt/nas/dvc/TransPose
